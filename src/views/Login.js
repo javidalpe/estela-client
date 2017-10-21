@@ -1,8 +1,10 @@
 import React from 'react';
 import {Container, Header, Item, Label, Input, Content, Button, Text} from 'native-base';
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
+import { connect } from 'react-redux'
+import {failedLogin, successLogin} from "../actions/index";
 
-export default class Login extends React.Component {
+class Login extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -20,11 +22,15 @@ export default class Login extends React.Component {
 				<Button onPress={() => this.doLogin()}>
 					<Text>Entrar</Text>
 				</Button>
+				{ this.props.login === 'failed' &&
+					<Text>Clave inválida</Text>
+				}
 			</Content>
 		</Container>;
 	}
 
 	doLogin() {
+		console.log(this.props);
 		fetch('https://www.estela.co/api/v2/', {
 			method: 'POST',
 			headers: {
@@ -47,12 +53,27 @@ export default class Login extends React.Component {
 			.then((response) => response.json())
 			.then((responseJson) => {
 				if (responseJson.result.meta.code == 403) {
-					this.setState()
+					this.props.failedLogin();
+				} else {
+					this.props.successLogin(responseJson.result.data);
 				}
-				console.log(responseJson);
 			})
 			.catch((error) => {
 				console.error(error);
 			});
 	}
 }
+
+function mapStateToProps(state) {
+	console.log(state);
+	return { login: state.login }
+}
+
+const mapDispatchToProps = {
+	failedLogin,
+	successLogin
+}
+
+Login = connect(mapStateToProps, mapDispatchToProps)(Login)
+
+export default Login
