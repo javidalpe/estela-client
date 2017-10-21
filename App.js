@@ -1,20 +1,17 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import Login from './src/views/Login';
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import login from './src/reducers/login'
+
+let store = createStore(login);
 
 export default class App extends React.Component {
-  render() {
-    return (
-      <Login/>
-    );
-  }
+	render() {
+		return (
+			<Provider store={store}>
+				<Login/>
+			</Provider>
+		);
+	}
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

@@ -1,13 +1,15 @@
+import * as Actions from '../actions'
+
 const login = (state = [], action) => {
 	switch (action.type) {
-		case 'FAILED_LOGIN':
+		case Actions.SUCCESS_LOGIN:
 			return [
 				...state,
 				{
 					login: 'failed'
 				}
 			];
-		case 'SUCCESS_LOGIN':
+		case Actions.FAILED_LOGIN:
 			return [
 				...state,
 				{
