@@ -1,6 +1,6 @@
 import * as Actions from '../actions'
 
-const login = (state = [], action) => {
+const login = (state = {login: false}, action) => {
 	switch (action.type) {
 		case Actions.FAILED_LOGIN:
 			return {
