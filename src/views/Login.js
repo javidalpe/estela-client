@@ -1,7 +1,7 @@
 import React from 'react';
-import {Container, Header, Item, Label, Input, Content, Button, Text} from 'native-base';
-import { Platform } from 'react-native';
-import { connect } from 'react-redux'
+import {Container, Header, Item, Label, Input, Content, Button, Text, Card, CardItem, Body} from 'native-base';
+import {Platform} from 'react-native';
+import {connect} from 'react-redux'
 import {failedLogin, onLogin, successLogin} from "../actions/index";
 import {TOKEN} from "./Track";
 
@@ -25,15 +25,25 @@ class Login extends React.Component {
 		}
 		return <Container>
 			<Content>
-				<Text>Si participas en un evento con eStela, introduce tu clave de participante.</Text>
-				<Item floatingLabel>
-					<Label>Clave de acceso</Label>
-					<Input onChangeText={(text) => this.setState({text})}/>
-				</Item>
-				{ button }
-				{ this.props.login === 'failed' &&
-					<Text>Clave inválida</Text>
-				}
+				<Card>
+					<CardItem header>
+						<Text>Si participas en un evento con eStela, introduce tu clave de participante.</Text>
+					</CardItem>
+					<CardItem>
+						<Body>
+						<Item floatingLabel last>
+							<Label>Clave de acceso</Label>
+							<Input onChangeText={(text) => this.setState({text})}/>
+						</Item>
+						</Body>
+					</CardItem>
+					<CardItem footer>
+						{button}
+						{this.props.login === 'failed' &&
+						<Text>Clave inválida</Text>
+						}
+					</CardItem>
+				</Card>
 			</Content>
 		</Container>;
 	}
@@ -63,7 +73,7 @@ class Login extends React.Component {
 		})
 			.then((response) => response.json())
 			.then((responseJson) => {
-			console.log(responseJson);
+				console.log(responseJson);
 				if (responseJson.result.meta.code === 403) {
 					this.props.failedLogin();
 				} else {
@@ -77,7 +87,7 @@ class Login extends React.Component {
 }
 
 function mapStateToProps(state) {
-	return { login: state.login }
+	return {login: state.login}
 }
 
 const mapDispatchToProps = {

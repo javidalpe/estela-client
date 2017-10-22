@@ -1,6 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux'
-import {Body, Card, CardItem, Container, Content, Header, Right, Switch, Text, Title} from "native-base";
+import {connect} from 'react-redux'
+import {
+	Body, Card, CardItem, Container, Content, Footer, FooterTab, Header, Right, Switch, Text,
+	Title
+} from "native-base";
 import {askingForRace, enterRace, manualSwitchOff, manualSwitchOn, waitingAvailableRace} from "../actions/index";
 import Status from "./Status";
 
@@ -22,19 +25,19 @@ class Track extends React.Component {
 		return <Container>
 			<Header>
 				<Body>
-					<Title>{this.props.boat.name}</Title>
+				<Title>{this.props.boat.name}</Title>
 				</Body>
 			</Header>
 			<Content>
 				<Card>
 					<CardItem>
 						<Body>
-							<Text>
-								Transmitir posición
-							</Text>
+						<Text>
+							Transmitir posición
+						</Text>
 						</Body>
 						<Right>
-							<Switch value={this.props.switch} onValueChange={(v)=>this.onSwitchChange(v)}/>
+							<Switch value={this.props.switch} onValueChange={(v) => this.onSwitchChange(v)}/>
 						</Right>
 					</CardItem>
 				</Card>
@@ -53,13 +56,13 @@ class Track extends React.Component {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				"jsonrpc":"2.0",
-				"method":"status",
-				"params":{
+				"jsonrpc": "2.0",
+				"method": "status",
+				"params": {
 					"key": this.props.boat.id,
 					"token": TOKEN
 				},
-				"id":1
+				"id": 1
 			})
 		})
 			.then((response) => response.json())
