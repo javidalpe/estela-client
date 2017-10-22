@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux'
 import {Badge, Body, Card, CardItem, Left, Text} from "native-base";
 import {Image} from "react-native";
+import {api} from "../utils/index";
+import {TOKEN} from "./Track";
 
 const Timer = (props) => {
 	var seconds = props.time % 60;
@@ -64,6 +66,20 @@ class Race extends React.Component {
 
 	savePosition(p) {
 		console.log(p);
+		api("positions", {
+			"token": TOKEN,
+			"battery": 56,
+			"charger": false,
+			"positions": [
+				{
+					"lat": p.coords.latitude,
+					"lon": p.coords.longitude,
+					"sog": p.coords.speed === -1 ? 0 : p.coords.speed,
+					"cog": p.coords.heading === -1 ? 0 : p.coords.heading,
+					"utc": (new Date()).toISOString()
+				}
+			]
+		});
 	}
 }
 
