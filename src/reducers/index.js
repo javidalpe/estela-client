@@ -1,6 +1,7 @@
 import * as Actions from '../actions'
 
 const reducers = (state = {login: false}, action) => {
+	console.log(action);
 	switch (action.type) {
 		case Actions.FAILED_LOGIN:
 			return {

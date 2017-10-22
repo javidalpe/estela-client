@@ -4,6 +4,8 @@ import {Badge, Body, Card, CardItem, Left, Text} from "native-base";
 import {Image} from "react-native";
 import {api} from "../utils/index";
 import {TOKEN} from "./Track";
+import Position from "./Position";
+import {newPosition} from "../actions/index";
 
 const Timer = (props) => {
 	var seconds = props.time % 60;
@@ -43,29 +45,26 @@ class Race extends React.Component {
 	render() {
 		return <Card>
 			<CardItem>
-				<Left>
-					<Body>
+				<Body>
 					<Text>{this.props.race.name}</Text>
 					<Text note>{this.props.race.club.name}</Text>
-					</Body>
-				</Left>
+				</Body>
 			</CardItem>
 			<CardItem cardBody>
 				<Image source={{uri: this.props.race.picture}} style={{height: 200, width: null, flex: 1}}/>
 			</CardItem>
 			<CardItem>
-				<Left>
-					<Badge danger>
-						<Text></Text>
-					</Badge>
-				</Left>
-				<Text><Timer time={this.state.ellapsed}/></Text>
+				<Body>
+					<Text note>Duración</Text>
+					<Text><Timer time={this.state.ellapsed}/></Text>
+				</Body>
 			</CardItem>
+			<Position/>
 		</Card>
 	}
 
 	savePosition(p) {
-		console.log(p);
+		this.props.newPosition(p);
 		api("positions", {
 			"token": TOKEN,
 			"battery": 56,
@@ -85,11 +84,14 @@ class Race extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		position: state.position,
 		race: state.race,
 	}
 }
 
-Race = connect(mapStateToProps)(Race);
+const mapDispatchToProps = {
+	newPosition
+};
+
+Race = connect(mapStateToProps, mapDispatchToProps)(Race);
 
 export default Race

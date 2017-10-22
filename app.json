@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "estela-client",
-    "description": "An empty new project",
-    "slug": "estela-client",
+    "name": "Estela Mobile Tracker",
+    "description": "Mobile GPS Tracker for estela.co platform",
+    "slug": "estela-tracker",
     "privacy": "public",
     "sdkVersion": "22.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
-    "primaryColor": "#cccccc",
+    "primaryColor": "#007188",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",

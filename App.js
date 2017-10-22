@@ -5,7 +5,6 @@ import reducers from './src/reducers/index'
 import Main from "./src/views/Main";
 
 let store = createStore(reducers);
-console.log(store.getState());
 
 export default class App extends React.Component {
 	render() {

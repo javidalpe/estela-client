@@ -54,29 +54,19 @@ class Track extends React.Component {
 		api("status", {
 			"key": this.props.boat.id,
 			"token": TOKEN
-		})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				console.log(responseJson);
-				if (responseJson.result.meta.code === 600) {
-					this.props.waitingAvailableRace();
-				} else {
-					this.props.enterRace(responseJson.result.data.race);
-				}
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		}, (responseJson) => {
+			if (responseJson.result.meta.code === 600) {
+				this.props.waitingAvailableRace();
+			} else {
+				this.props.enterRace(responseJson.result.data.race);
+			}
+		});
 	}
 
 	sendQuit() {
 		api("quit", {
 			"token": TOKEN
-		})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				console.log(responseJson);
-			});
+		});
 	}
 }
 

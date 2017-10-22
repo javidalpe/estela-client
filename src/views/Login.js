@@ -15,14 +15,32 @@ class Login extends React.Component {
 
 	render() {
 		let button;
+		let input;
 		if (this.props.login === 'on') {
 			button = <Button disabled>
 				<Text>Entrar</Text>
 			</Button>;
+			input = <Item floatingLabel last>
+				<Label>Clave de acceso</Label>
+				<Input disbled/>
+			</Item>
 		} else {
 			button = <Button onPress={() => this.doLogin()}>
 				<Text>Entrar</Text>
 			</Button>;
+
+			if (this.props.login === 'failed') {
+				input = <Item floatingLabel last error>
+					<Label>Clave de acceso</Label>
+					<Input onChangeText={(text) => this.setState({text})}/>
+					<Text style={{color: 'red'}}>Clave inválida</Text>
+				</Item>
+			} else {
+				input = <Item floatingLabel last>
+					<Label>Clave de acceso</Label>
+					<Input onChangeText={(text) => this.setState({text})}/>
+				</Item>
+			}
 		}
 		return <Container>
 			<Content>
@@ -32,17 +50,11 @@ class Login extends React.Component {
 					</CardItem>
 					<CardItem>
 						<Body>
-						<Item floatingLabel last>
-							<Label>Clave de acceso</Label>
-							<Input onChangeText={(text) => this.setState({text})}/>
-						</Item>
+						{input}
 						</Body>
 					</CardItem>
 					<CardItem footer>
 						{button}
-						{this.props.login === 'failed' &&
-						<Text>Clave inválida</Text>
-						}
 					</CardItem>
 				</Card>
 			</Content>
@@ -59,19 +71,15 @@ class Login extends React.Component {
 			"version": Platform.Version,
 			"device": "Expo",
 			"token": TOKEN
-		})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				console.log(responseJson);
-				if (responseJson.result.meta.code === 403) {
-					this.props.failedLogin();
-				} else {
-					this.props.successLogin(responseJson.result.data);
-				}
-			})
-			.catch((error) => {
+		}, (responseJson) => {
+			if (responseJson.result.meta.code === 403) {
 				this.props.failedLogin();
-			});
+			} else {
+				this.props.successLogin(responseJson.result.data);
+			}
+		}, (error) => {
+			this.props.failedLogin();
+		});
 	}
 }
 
@@ -83,7 +91,7 @@ const mapDispatchToProps = {
 	failedLogin,
 	successLogin,
 	onLogin
-}
+};
 
 Login = connect(mapStateToProps, mapDispatchToProps)(Login)
 

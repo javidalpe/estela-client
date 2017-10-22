@@ -1,5 +1,5 @@
-export const api = (method, params) => {
-	return fetch('https://www.estela.co/api/v2/', {
+export const api = (method, params, callback, errorCallback) => {
+	fetch('https://www.estela.co/api/v2/', {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
@@ -11,5 +11,16 @@ export const api = (method, params) => {
 			"params": params,
 			"id": 1
 		})
-	});
+	})
+		.then((response) => response.json())
+		.then((responseJson) => {
+			if (callback) {
+				callback(responseJson);
+			}
+		})
+		.catch((error) => {
+			if (errorCallback) {
+				errorCallback(error);
+			}
+		});
 };
