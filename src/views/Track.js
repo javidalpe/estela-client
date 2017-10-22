@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import {Body, Card, CardItem, Container, Content, Header, Right, Switch, Text, Title} from "native-base";
-import {manualSwitchOff, manualSwitchOn} from "../actions/index";
+import {askingForRace, enterRace, manualSwitchOff, manualSwitchOn, waitingAvailableRace} from "../actions/index";
+import Status from "./Status";
+
+
+export const TOKEN = "kdsfbgdksfgbsk";
 
 class Track extends React.Component {
 
@@ -34,12 +38,42 @@ class Track extends React.Component {
 						</Right>
 					</CardItem>
 				</Card>
+				<Status/>
 			</Content>
 		</Container>
 	}
 
 	askForRace() {
+		this.props.askingForRace();
 
+		fetch('https://www.estela.co/api/v2/', {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				"jsonrpc":"2.0",
+				"method":"status",
+				"params":{
+					"key": this.props.boat.id,
+					"token": TOKEN
+				},
+				"id":1
+			})
+		})
+			.then((response) => response.json())
+			.then((responseJson) => {
+				console.log(responseJson);
+				if (responseJson.result.meta.code === 600) {
+					this.props.waitingAvailableRace();
+				} else {
+					this.props.enterRace(responseJson.result.data.race);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 }
 
@@ -52,7 +86,10 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
 	manualSwitchOn,
-	manualSwitchOff
+	manualSwitchOff,
+	askingForRace,
+	waitingAvailableRace,
+	enterRace,
 };
 
 Track = connect(mapStateToProps, mapDispatchToProps)(Track)

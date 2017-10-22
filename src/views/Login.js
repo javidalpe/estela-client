@@ -3,6 +3,7 @@ import {Container, Header, Item, Label, Input, Content, Button, Text} from 'nati
 import { Platform } from 'react-native';
 import { connect } from 'react-redux'
 import {failedLogin, onLogin, successLogin} from "../actions/index";
+import {TOKEN} from "./Track";
 
 class Login extends React.Component {
 
@@ -54,7 +55,8 @@ class Login extends React.Component {
 					"lang": "es",
 					"so": Platform.OS,
 					"version": Platform.Version,
-					"device": "Expo"
+					"device": "Expo",
+					"token": TOKEN
 				},
 				"id": 1
 			})
