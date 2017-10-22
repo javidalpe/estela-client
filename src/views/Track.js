@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import {Body, Card, CardItem, Container, Content, Header, Text, Title} from "native-base";
+import {Body, Card, CardItem, Container, Content, Header, Right, Switch, Text, Title} from "native-base";
 
 class Track extends React.Component {
 	render() {
@@ -14,10 +14,13 @@ class Track extends React.Component {
 				<Card>
 					<CardItem>
 						<Body>
-						<Text>
-							//Your text here
-						</Text>
+							<Text>
+								Transmitir posición
+							</Text>
 						</Body>
+						<Right>
+							<Switch/>
+						</Right>
 					</CardItem>
 				</Card>
 			</Content>

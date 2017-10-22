@@ -2,7 +2,7 @@ import React from 'react';
 import {Container, Header, Item, Label, Input, Content, Button, Text} from 'native-base';
 import { Platform } from 'react-native';
 import { connect } from 'react-redux'
-import {failedLogin, successLogin} from "../actions/index";
+import {failedLogin, onLogin, successLogin} from "../actions/index";
 
 class Login extends React.Component {
 
@@ -12,6 +12,16 @@ class Login extends React.Component {
 	}
 
 	render() {
+		let button;
+		if (this.props.login === 'on') {
+			button = <Button disabled>
+				<Text>Entrar</Text>
+			</Button>;
+		} else {
+			button = <Button onPress={() => this.doLogin()}>
+				<Text>Entrar</Text>
+			</Button>;
+		}
 		return <Container>
 			<Content>
 				<Text>Si participas en un evento con eStela, introduce tu clave de participante.</Text>
@@ -19,9 +29,7 @@ class Login extends React.Component {
 					<Label>Clave de acceso</Label>
 					<Input onChangeText={(text) => this.setState({text})}/>
 				</Item>
-				<Button onPress={() => this.doLogin()}>
-					<Text>Entrar</Text>
-				</Button>
+				{ button }
 				{ this.props.login === 'failed' &&
 					<Text>Clave inválida</Text>
 				}
@@ -30,7 +38,8 @@ class Login extends React.Component {
 	}
 
 	doLogin() {
-		console.log(this.props);
+		this.props.onLogin();
+
 		fetch('https://www.estela.co/api/v2/', {
 			method: 'POST',
 			headers: {
@@ -70,7 +79,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
 	failedLogin,
-	successLogin
+	successLogin,
+	onLogin
 }
 
 Login = connect(mapStateToProps, mapDispatchToProps)(Login)

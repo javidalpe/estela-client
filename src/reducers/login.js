@@ -12,6 +12,10 @@ const login = (state = {login: false}, action) => {
 				boat: action.data.boat,
 				clubs: action.data.clubs,
 			};
+		case Actions.ON_LOGIN:
+			return {
+				login: 'on'
+			};
 		default:
 			return state
 	}
