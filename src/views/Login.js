@@ -61,14 +61,15 @@ class Login extends React.Component {
 		})
 			.then((response) => response.json())
 			.then((responseJson) => {
-				if (responseJson.result.meta.code == 403) {
+			console.log(responseJson);
+				if (responseJson.result.meta.code === 403) {
 					this.props.failedLogin();
 				} else {
 					this.props.successLogin(responseJson.result.data);
 				}
 			})
 			.catch((error) => {
-				console.error(error);
+				this.props.failedLogin();
 			});
 	}
 }

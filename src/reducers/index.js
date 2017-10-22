@@ -1,7 +1,25 @@
 import * as Actions from '../actions'
 
-const track = (state = {login: false}, action) => {
+const reducers = (state = {login: false}, action) => {
 	switch (action.type) {
+		case Actions.FAILED_LOGIN:
+			return {
+				login: "failed"
+			};
+		case Actions.SUCCESS_LOGIN:
+			return {
+				login: 'ok',
+				boat: action.data.boat,
+				clubs: action.data.clubs,
+			};
+		case Actions.ON_LOGIN:
+			return {
+				login: 'on'
+			};
+		case Actions.LOGOUT:
+			return {
+				login: false,
+			};
 		case Actions.MANUAL_SWITCH_TRACK_OFF:
 			return Object.assign({}, state, {
 				switch: false,
@@ -39,8 +57,9 @@ const track = (state = {login: false}, action) => {
 			return Object.assign({}, state, {
 				position: action.position
 			});
+		default:
+			return state
 	}
-	return state;
 };
 
-export default track;
+export default reducers
