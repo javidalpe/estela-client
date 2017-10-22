@@ -6,6 +6,7 @@ export const LOGOUT = 'LOGOUT';
 export const MANUAL_SWITCH_TRACK_ON = 'MANUAL_SWITCH_TRACK_ON';
 export const MANUAL_SWITCH_TRACK_OFF = 'MANUAL_SWITCH_TRACK_OFF';
 
+export const ASKING_FOR_RACE = 'ASKING_FOR_RACE';
 export const WAITING_AVAILABLE_RACE = 'WAITING_AVAILABLE_RACE';
 export const ENTER_RACE = 'ENTER_RACE';
 export const NEW_POSITION = 'NEW_POSITION';
@@ -38,6 +39,12 @@ export const manualSwitchOn = () => {
 export const manualSwitchOff = () => {
 	return {
 		type: MANUAL_SWITCH_TRACK_OFF
+	}
+};
+
+export const askingForRace = () => {
+	return {
+		type: ASKING_FOR_RACE
 	}
 };
 

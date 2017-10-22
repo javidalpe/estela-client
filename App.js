@@ -1,10 +1,11 @@
 import React from 'react';
-import {createStore} from 'redux'
+import {combineReducers, createStore} from 'redux'
 import {Provider} from 'react-redux'
 import login from './src/reducers/login'
+import track from "./src/reducers/track";
 import Main from "./src/views/Main";
 
-let store = createStore(login);
+let store = createStore(combineReducers({login,track}));
 
 export default class App extends React.Component {
 	render() {
