@@ -6,6 +6,7 @@ import {
 } from "native-base";
 import {askingForRace, enterRace, manualSwitchOff, manualSwitchOn, waitingAvailableRace} from "../actions/index";
 import Status from "./Status";
+import {api} from "../utils/index";
 
 
 export const TOKEN = "kdsfbgdksfgbsk";
@@ -18,6 +19,7 @@ class Track extends React.Component {
 			this.askForRace();
 		} else {
 			this.props.manualSwitchOff();
+			this.sendQuit();
 		}
 	}
 
@@ -49,21 +51,9 @@ class Track extends React.Component {
 	askForRace() {
 		this.props.askingForRace();
 
-		fetch('https://www.estela.co/api/v2/', {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				"jsonrpc": "2.0",
-				"method": "status",
-				"params": {
-					"key": this.props.boat.id,
-					"token": TOKEN
-				},
-				"id": 1
-			})
+		api("status", {
+			"key": this.props.boat.id,
+			"token": TOKEN
 		})
 			.then((response) => response.json())
 			.then((responseJson) => {
@@ -76,6 +66,16 @@ class Track extends React.Component {
 			})
 			.catch((error) => {
 				console.log(error);
+			});
+	}
+
+	sendQuit() {
+		api("quit", {
+			"token": TOKEN
+		})
+			.then((response) => response.json())
+			.then((responseJson) => {
+				console.log(responseJson);
 			});
 	}
 }

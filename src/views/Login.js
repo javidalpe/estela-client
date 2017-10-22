@@ -4,6 +4,7 @@ import {Platform} from 'react-native';
 import {connect} from 'react-redux'
 import {failedLogin, onLogin, successLogin} from "../actions/index";
 import {TOKEN} from "./Track";
+import {api} from "../utils/index";
 
 class Login extends React.Component {
 
@@ -51,25 +52,13 @@ class Login extends React.Component {
 	doLogin() {
 		this.props.onLogin();
 
-		fetch('https://www.estela.co/api/v2/', {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				"jsonrpc": "2.0",
-				"method": "auth",
-				"params": {
-					"key": this.state.text,
-					"lang": "es",
-					"so": Platform.OS,
-					"version": Platform.Version,
-					"device": "Expo",
-					"token": TOKEN
-				},
-				"id": 1
-			})
+		api('auth', {
+			"key": this.state.text,
+			"lang": "es",
+			"so": Platform.OS,
+			"version": Platform.Version,
+			"device": "Expo",
+			"token": TOKEN
 		})
 			.then((response) => response.json())
 			.then((responseJson) => {
