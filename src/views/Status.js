@@ -1,11 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {Body, Card, CardItem, Text} from "native-base";
+import {Body, Card, CardItem, Spinner, Text} from "native-base";
 import Race from "./Race";
 
 const Fetching = () => <Card>
 	<CardItem>
 		<Body>
+		<Spinner />
 		<Text>
 			Consultando regatas...
 		</Text>
@@ -16,6 +17,7 @@ const Fetching = () => <Card>
 const Waiting = () => <Card>
 	<CardItem>
 		<Body>
+		<Spinner />
 		<Text>
 			Esperando regata disponible...
 		</Text>

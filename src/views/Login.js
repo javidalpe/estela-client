@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Header, Item, Label, Input, Content, Button, Text, Card, CardItem, Body} from 'native-base';
+import {Container, Header, Item, Label, Input, Content, Button, Text, Card, CardItem, Body, Spinner} from 'native-base';
 import {Platform} from 'react-native';
 import {connect} from 'react-redux'
 import {failedLogin, onLogin, successLogin} from "../actions/index";
@@ -19,6 +19,7 @@ class Login extends React.Component {
 		if (this.props.login === 'on') {
 			button = <Button disabled>
 				<Text>Entrar</Text>
+				<Spinner />
 			</Button>;
 			input = <Item floatingLabel last>
 				<Label>Clave de acceso</Label>
